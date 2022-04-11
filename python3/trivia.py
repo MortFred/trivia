@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.square = 0
+        self.coins = 0
+        self.penalty = False
+        self.active = False
 class Game:
     def __init__(self):
         self.players = []
