@@ -9,6 +9,7 @@ class Player:
         self.active = False
 class Game:
     def __init__(self):
+        self.players_new = []
         self.players = []
         self.places = [0] * 6
         self.purses = [0] * 6
@@ -33,6 +34,9 @@ class Game:
 
     def is_playable(self):
         return self.how_many_players >= 2
+
+    def add_player(self, name):
+        self.players_new.append(Player(name))
 
     def add(self, player_name):
         self.players.append(player_name)
