@@ -8,7 +8,10 @@ from trivia import Game, Player
 
 def setup():
     game = Game()
-    return game
+    names = ["Suzy", "David", "Juan"]
+    for name in names:
+        game.add_player(name)
+    return game, names
 
 def test_player_is_initialized_correctly():
     name = "Suzy"
@@ -30,3 +33,9 @@ def test_players_are_added_to_game():
     assert len(game.players_new) == len(names)
     for player in game.players_new:
         _verify_player_added(player, player.name)
+
+def test_current_player_is_initialized_to_first_added():
+    game, names = setup()
+    assert game.current_player_new.name == names[0]
+    print(names[0])
+

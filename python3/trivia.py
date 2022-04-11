@@ -20,6 +20,7 @@ class Game:
         self.sports_questions = []
         self.rock_questions = []
 
+        self.current_player_new = None
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
 
@@ -27,16 +28,17 @@ class Game:
             self.pop_questions.append("Pop Question %s" % i)
             self.science_questions.append("Science Question %s" % i)
             self.sports_questions.append("Sports Question %s" % i)
-            self.rock_questions.append(self.create_rock_question(i))
-
-    def create_rock_question(self, index):
-        return "Rock Question %s" % index
+            self.rock_questions.append("Rock Question %s" % i)
 
     def is_playable(self):
         return self.how_many_players >= 2
 
     def add_player(self, name):
         self.players_new.append(Player(name))
+        if len(self.players_new) == 1: 
+            self.current_player_new = self.players_new[0]
+        print(name + " was added")
+        print("They are player number %s" % len(self.players_new))
 
     def add(self, player_name):
         self.players.append(player_name)
