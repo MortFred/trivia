@@ -41,7 +41,7 @@ class Game:
         return len(self.players)
 
     def roll(self, roll):
-        print("%s is the current player" % self.players[self.current_player])
+        print("\n%s is the current player" % self.players[self.current_player])
         print("They have rolled a %s" % roll)
 
         if self.in_penalty_box[self.current_player]:
@@ -101,6 +101,7 @@ class Game:
                     str(self.purses[self.current_player]) + \
                     ' Gold Coins.')
 
+                self.in_penalty_box[self.current_player] = False
                 winner = self._did_player_win()
                 self.current_player += 1
                 if self.current_player == len(self.players): self.current_player = 0
