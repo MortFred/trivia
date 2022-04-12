@@ -1,4 +1,4 @@
-from trivia import Game, Player
+from trivia_new import Game_new, Player
 
 #A game consists of several players
 #Each player has a name, a square placement, a coin purse, an active status and a penalty status
@@ -20,8 +20,8 @@ from trivia import Game, Player
 
 
 def setup():
-    game = Game()
-    names = ["Suzy", "David", "Juan"]
+    game = Game_new()
+    names = ["Chet", "Pat", "Sue"]
     for name in names:
         game.add_player(name)
     return game, names
@@ -39,7 +39,7 @@ def _verify_player_added(player, name):
     assert player.active == False
 
 def test_players_are_added_to_game():
-    game = Game()
+    game = Game_new()
     names = ["Suzy", "David", "Juan"]
     for name in names:
         game.add_player(name)
@@ -104,12 +104,13 @@ def test_case_release_player_from_penalty_box():
 def test_case_player_gets_coin_for_correct_answer():
     game, player = test_case_release_player_from_penalty_box()
     assert player.coins == 1
-    
 
-# def test_penalty_box_has_correct_logic():
-#     game, names = setup()
-    
+def test_case_player_wins():
+    game, names = setup()
+    player = game.current_player_new
+    player.coins = 5
+    dice_roll = 1
+    simulated_answer = True
+    game.play_turn(player, dice_roll, simulated_answer)
+    assert game.winner == player.name
 
-
-# def test_case_player_stays_in_penalty_box():
-#     roll
