@@ -31,11 +31,18 @@ def test_players_are_added_to_game():
     for name in names:
         game.add_player(name)
     assert len(game.players_new) == len(names)
-    for player in game.players_new:
+    for player in game.players_new.values():
         _verify_player_added(player, player.name)
 
 def test_current_player_is_initialized_to_first_added():
     game, names = setup()
     assert game.current_player_new.name == names[0]
     print(names[0])
+
+def test_next_turn_changes_active_player():
+    game, names = setup()
+    for name in names:
+        assert game.current_player_new.name == name
+        game.give_turn_to_next_player()
+    assert game.current_player_new.name == names[0]
 

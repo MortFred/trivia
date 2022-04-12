@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from gettext import find
+from itertools import cycle
 class Player:
     def __init__(self, name):
         self.name = name
@@ -9,7 +11,7 @@ class Player:
         self.active = False
 class Game:
     def __init__(self):
-        self.players_new = []
+        self.players_new = dict()
         self.players = []
         self.places = [0] * 6
         self.purses = [0] * 6
@@ -34,11 +36,23 @@ class Game:
         return self.how_many_players >= 2
 
     def add_player(self, name):
-        self.players_new.append(Player(name))
+        self.players_new[name] = Player(name)
         if len(self.players_new) == 1: 
-            self.current_player_new = self.players_new[0]
+            self.current_player_new = self.players_new[name]
         print(name + " was added")
         print("They are player number %s" % len(self.players_new))
+
+    def give_turn_to_next_player(self):
+        list_of_players = list(self.players_new.keys())
+        current_player_name = self.current_player_new.name
+        index_of_current_player = list_of_players.index(current_player_name)
+
+        index_of_next_player = index_of_current_player + 1
+        if index_of_next_player >= len(list_of_players):
+            index_of_next_player = 0
+
+        next_player_name = list_of_players[index_of_next_player]
+        self.current_player_new = self.players_new[next_player_name]
 
     def add(self, player_name):
         self.players.append(player_name)
