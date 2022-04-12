@@ -60,11 +60,17 @@ class Game:
             player.square -= 12
     
     def check_penalty(self, player, dice_roll):
+        if player.penalty is True:
+            if dice_roll%2 != 0:
+                print("%s stays in the penalty box" % player.name)
+                return True
+            else:
+                self.remove_player_from_penalty(player)
         return False
 
-    def ask_question_new(self, correct_answer=None):
+    def ask_question_new(self, simulated_answer=None):
         self.display_question()
-        answer = correct_answer
+        answer = simulated_answer
         if answer == None:
             while (answer != False or answer != True):
                 print("Please write \"True\" or \"False\": \n")
@@ -78,17 +84,22 @@ class Game:
         if self._current_category_new == 'Rock': print(self.rock_questions.pop(0))
 
     def put_player_in_penalty(self, player):
+        print("%s was sent to the penalty box" % player.name)
         player.penalty = True
 
-    def play_turn(self, dice_roll, correct_answer):
-        if(self.check_penalty(self.current_player_new, dice_roll)):
+    def remove_player_from_penalty(self, player):
+        print("%s is getting out of the penalty box" % player.name)
+        player.penalty = False
+
+    def play_turn(self, player, dice_roll, simulated_answer=None):
+        if(self.check_penalty(player, dice_roll)):
             return
-        self.move_player(self.current_player_new, dice_roll)
-        answer = self.ask_question_new(correct_answer)
+        self.move_player(player, dice_roll)
+        answer = self.ask_question_new(simulated_answer)
         if answer is True:
             print("Correct answer")
         else:
-            self.put_player_in_penalty(self.current_player_new)
+            self.put_player_in_penalty(player)
         self.give_turn_to_next_player()
         return
 

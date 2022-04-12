@@ -87,9 +87,18 @@ def test_correct_category_is_displayed():
 def test_case_put_player_in_penalty_box():
     game, names = setup()
     dice_roll = 1
-    correct_answer = False
-    game.play_turn(dice_roll, correct_answer)
-    assert game.players_new[names[0]].penalty == True
+    simulated_answer = False
+    player = game.current_player_new
+    game.play_turn(player, dice_roll, simulated_answer)
+    assert player.penalty == True
+    return game, player
+
+def test_case_release_player_from_penalty_bos():
+    game, player = test_case_put_player_in_penalty_box()
+    dice_roll = 2
+    simulated_answer = True
+    game.play_turn(player, dice_roll, simulated_answer)
+    assert player.penalty == False
 
 
 
