@@ -56,11 +56,26 @@ class Game:
 
     def move_player(self, player, dice_roll):
         player.square += dice_roll
-        if player.square > 12:
+        if player.square > 11:
             player.square -= 12
     
-    def play_turn(self, roll, correct_answer):
-        move_player(roll)
+    def check_penalty(self, player, dice_roll):
+        return False
+
+    def ask_question_new(self, correct_answer=None):
+        self.display_question()
+
+    def display_question(self):
+        if self._current_category_new == 'Pop': print(self.pop_questions.pop(0))
+        if self._current_category_new == 'Science': print(self.science_questions.pop(0))
+        if self._current_category_new == 'Sports': print(self.sports_questions.pop(0))
+        if self._current_category_new == 'Rock': print(self.rock_questions.pop(0))
+
+    def play_turn(self, dice_roll, correct_answer):
+        if(self.check_penalty(self.current_player, dice_roll)):
+            return
+        self.move_player(self.current_player_new, dice_roll)
+        answer = self.ask_question_new(correct_answer)
 
     def add(self, player_name):
         self.players.append(player_name)
@@ -126,6 +141,13 @@ class Game:
         if self.places[self.current_player] == 2: return 'Sports'
         if self.places[self.current_player] == 6: return 'Sports'
         if self.places[self.current_player] == 10: return 'Sports'
+        return 'Rock'
+    
+    @property
+    def _current_category_new(self):
+        if self.current_player_new.square in [0, 4, 8]: return 'Pop'
+        if self.current_player_new.square in [1, 5, 9]: return 'Science'
+        if self.current_player_new.square in [2, 6, 10]: return 'Sports'
         return 'Rock'
 
     def was_correctly_answered(self):

@@ -72,6 +72,17 @@ def test_player_moves_correctly():
     game.move_player(test_player, dice_roll_3)
     assert test_player.square == 1
 
+def test_correct_category_is_displayed():
+    game, names = setup()
+    test_player = game.players_new[names[0]]
+    test_player.square = 0
+    assert game._current_category_new == 'Pop'
+    test_player.square = 1
+    assert game._current_category_new == 'Science'
+    test_player.square = 2
+    assert game._current_category_new == 'Sports'
+    test_player.square = 7
+    assert game._current_category_new == 'Rock'
 
 # def test_case_put_player_in_penalty_box():
 #     game, names = setup()
@@ -79,6 +90,13 @@ def test_player_moves_correctly():
 #     correct_answer = False
 #     game.play_turn(dice_roll, correct_answer)
 #     assert game.players_new[names[0]].penalty == True
+
+
+
+# def test_penalty_box_has_correct_logic():
+#     game, names = setup()
+    
+
 
 # def test_case_player_stays_in_penalty_box():
 #     roll
