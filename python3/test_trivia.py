@@ -84,12 +84,12 @@ def test_correct_category_is_displayed():
     test_player.square = 7
     assert game._current_category_new == 'Rock'
 
-# def test_case_put_player_in_penalty_box():
-#     game, names = setup()
-#     dice_roll = 1
-#     correct_answer = False
-#     game.play_turn(dice_roll, correct_answer)
-#     assert game.players_new[names[0]].penalty == True
+def test_case_put_player_in_penalty_box():
+    game, names = setup()
+    dice_roll = 1
+    correct_answer = False
+    game.play_turn(dice_roll, correct_answer)
+    assert game.players_new[names[0]].penalty == True
 
 
 

@@ -64,6 +64,12 @@ class Game:
 
     def ask_question_new(self, correct_answer=None):
         self.display_question()
+        answer = correct_answer
+        if answer == None:
+            while (answer != False or answer != True):
+                print("Please write \"True\" or \"False\": \n")
+                answer = input()
+        return answer
 
     def display_question(self):
         if self._current_category_new == 'Pop': print(self.pop_questions.pop(0))
@@ -71,11 +77,20 @@ class Game:
         if self._current_category_new == 'Sports': print(self.sports_questions.pop(0))
         if self._current_category_new == 'Rock': print(self.rock_questions.pop(0))
 
+    def put_player_in_penalty(self, player):
+        player.penalty = True
+
     def play_turn(self, dice_roll, correct_answer):
-        if(self.check_penalty(self.current_player, dice_roll)):
+        if(self.check_penalty(self.current_player_new, dice_roll)):
             return
         self.move_player(self.current_player_new, dice_roll)
         answer = self.ask_question_new(correct_answer)
+        if answer is True:
+            print("Correct answer")
+        else:
+            self.put_player_in_penalty(self.current_player_new)
+        self.give_turn_to_next_player()
+        return
 
     def add(self, player_name):
         self.players.append(player_name)
