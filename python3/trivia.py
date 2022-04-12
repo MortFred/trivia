@@ -54,6 +54,14 @@ class Game:
         next_player_name = list_of_players[index_of_next_player]
         self.current_player_new = self.players_new[next_player_name]
 
+    def move_player(self, player, dice_roll):
+        player.square += dice_roll
+        if player.square > 12:
+            player.square -= 12
+    
+    def play_turn(self, roll, correct_answer):
+        move_player(roll)
+
     def add(self, player_name):
         self.players.append(player_name)
         self.places[self.how_many_players] = 0
