@@ -39,8 +39,8 @@ class Game:
         self.players_new[name] = Player(name)
         if len(self.players_new) == 1: 
             self.current_player_new = self.players_new[name]
-        print(name + " was added")
-        print("They are player number %s" % len(self.players_new))
+        print("%s was added", name)
+        print("They are player number %s", len(self.players_new))
 
     def give_turn_to_next_player(self):
         list_of_players = list(self.players_new.keys())
@@ -58,15 +58,19 @@ class Game:
         player.square += dice_roll
         if player.square > 11:
             player.square -= 12
+        print('%s\'s new location is %s', player.name, player.square)
     
     def check_penalty(self, player, dice_roll):
         if player.penalty is True:
             if dice_roll%2 != 0:
-                print("%s stays in the penalty box" % player.name)
+                print("%s stays in the penalty box", player.name)
                 return True
             else:
                 self.remove_player_from_penalty(player)
         return False
+
+    def award_coin(self, player):
+        player.coins += 1
 
     def ask_question_new(self, simulated_answer=None):
         self.display_question()
@@ -78,26 +82,29 @@ class Game:
         return answer
 
     def display_question(self):
+        print("The category is %s", self._current_category_new)
         if self._current_category_new == 'Pop': print(self.pop_questions.pop(0))
         if self._current_category_new == 'Science': print(self.science_questions.pop(0))
         if self._current_category_new == 'Sports': print(self.sports_questions.pop(0))
         if self._current_category_new == 'Rock': print(self.rock_questions.pop(0))
 
     def put_player_in_penalty(self, player):
-        print("%s was sent to the penalty box" % player.name)
+        print("%s was sent to the penalty box", player.name)
         player.penalty = True
 
     def remove_player_from_penalty(self, player):
-        print("%s is getting out of the penalty box" % player.name)
+        print("%s is getting out of the penalty box", player.name)
         player.penalty = False
 
     def play_turn(self, player, dice_roll, simulated_answer=None):
+        print("%s is the current player", player.name)
+        print("They have rolled a %s", dice_roll)
         if(self.check_penalty(player, dice_roll)):
             return
         self.move_player(player, dice_roll)
         answer = self.ask_question_new(simulated_answer)
         if answer is True:
-            print("Correct answer")
+            self.award_coin(player)
         else:
             self.put_player_in_penalty(player)
         self.give_turn_to_next_player()

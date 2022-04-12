@@ -93,14 +93,18 @@ def test_case_put_player_in_penalty_box():
     assert player.penalty == True
     return game, player
 
-def test_case_release_player_from_penalty_bos():
+def test_case_release_player_from_penalty_box():
     game, player = test_case_put_player_in_penalty_box()
     dice_roll = 2
     simulated_answer = True
     game.play_turn(player, dice_roll, simulated_answer)
     assert player.penalty == False
+    return game, player
 
-
+def test_case_player_gets_coin_for_correct_answer():
+    game, player = test_case_release_player_from_penalty_box()
+    assert player.coins == 1
+    
 
 # def test_penalty_box_has_correct_logic():
 #     game, names = setup()
